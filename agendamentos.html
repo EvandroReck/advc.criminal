@@ -2,93 +2,128 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SisDefesa | Lançar Agendamento</title>
     <link rel="stylesheet" href="estilo.css">
-    <title>SisCristóvão - Lançar Agendamento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="clientes.html"><i class="fas fa-users"></i> Clientes</a>
+        <a href="servicos.html"><i class="fas fa-gavel"></i> Serviços</a>
+        <a href="agendamentos.html"><i class="fas fa-calendar-alt"></i> Agendamentos</a>
+        <a href="consulta_agendamentos.html"><i class="fas fa-search"></i> Consultar</a>
     </nav>
 
     <header class="banner">
-        <h1>Controle de Agendamentos</h1>
-        <p>Abra ordens de serviço e reserve horários para atendimento</p>
+        <div class="banner-overlay">
+            <h1>📅 Controle de Agendamentos</h1>
+            <p class="slogan">Gestão estratégica de audiências, reuniões e prazos processuais</p>
+        </div>
     </header>
 
     <div class="container">
-        <div style="margin-bottom: 20px;">
-            <button onclick="window.location.href='consulta_agendamentos.html'" style="background: #555; width: auto; padding: 10px 20px;">
-                🔍 Ver Histórico de Agendamentos
+        <!-- Cabeçalho da Página -->
+        <div class="card">
+            <h2><i class="fas fa-plus-circle"></i> Nova Audiência / Agendamento</h2>
+            <p>Registre uma nova ordem de serviço ou agendamento de audiência com todos os detalhes necessários para o acompanhamento processual.</p>
+        </div>
+
+        <!-- Botão de Acesso Rápido -->
+        <div style="margin: 20px 0;">
+            <button onclick="window.location.href='consulta_agendamentos.html'" class="btn-secondary">
+                <i class="fas fa-history"></i> Ver Histórico Completo de Agendamentos
             </button>
         </div>
 
+        <!-- Formulário Principal -->
         <div class="card">
-            <h2>Nova Ordem de Serviço / Agendamento</h2>
-
-            <label for="selCliente">Cliente / Solicitante:</label>
-            <select id="selCliente">
+            <h3>🔹 Dados do Agendamento</h3>
+            
+            <label for="selCliente"><strong>Cliente / Réu:</strong></label>
+            <select id="selCliente" required>
                 <option value="">Selecione o Cliente...</option>
             </select>
 
-            <label for="data_agendamento">Data e Hora do Atendimento:</label>
+            <label for="data_agendamento"><strong>Data e Hora da Audiência / Reunião:</strong></label>
             <input type="datetime-local" id="data_agendamento" required>
 
-            <label for="responsavel">Aluno / Equipe Responsável:</label>
-            <input type="text" id="responsavel" placeholder="Ex: Grupo 2 (Ana e Pedro)" required>
+            <label for="responsavel"><strong>Advogado / Equipe Responsável:</strong></label>
+            <input type="text" id="responsavel" placeholder="Ex: Dr. João Silva ou Equipe Criminal A" required>
 
             <hr>
 
-            <h3>🛠️ Adicionar Serviços ao Agendamento</h3>
+            <h3>🛡️ Adicionar Serviços / Atuações</h3>
             
-            <label for="selServico">Selecione o Serviço:</label>
+            <label for="selServico"><strong>Selecione o Serviço / Atuação:</strong></label>
             <select id="selServico" onchange="atualizarDadosServico()">
                 <option value="">Selecione um serviço...</option>
             </select>
 
-            <div style="display: flex; gap: 15px; margin-top: 5px;">
-                <div style="flex: 1;">
-                    <label>Preço Sugerido (R$):</label>
-                    <input type="number" id="txtPreco" readonly style="background: #eee;">
+            <div class="flex-container">
+                <div class="flex-item">
+                    <label>Valor (R$):</label>
+                    <input type="number" id="txtPreco" readonly>
                 </div>
-                <div style="flex: 1;">
-                    <label>Tempo Est. (Horas):</label>
-                    <input type="number" id="txtTempo" readonly style="background: #eee;">
+                <div class="flex-item">
+                    <label>Tempo Estimado (Horas):</label>
+                    <input type="number" id="txtTempo" readonly>
                 </div>
             </div>
 
-            <button type="button" onclick="adicionarServicoNaLista()" style="background-color: var(--primary-blue); margin-top: 15px;">
-                ➕ Incluir Serviço no Agendamento
+            <button type="button" onclick="adicionarServicoNaLista()" class="btn-primary">
+                <i class="fas fa-plus"></i> Incluir Atuação no Agendamento
             </button>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h2>Serviços Inclusos neste Agendamento</h2>
+        <!-- Lista de Serviços Adicionados -->
+        <div class="card">
+            <h3>📋 Atuações Inclusas neste Agendamento</h3>
+            
             <table>
                 <thead>
                     <tr>
-                        <th>Serviço</th>
-                        <th>Tempo Est.</th>
-                        <th>Preço (R$)</th>
+                        <th>Serviço / Atuação</th>
+                        <th>Tempo Estimado</th>
+                        <th>Valor (R$)</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody id="lista-servicos-agendados">
-                    </tbody>
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
             </table>
 
-            <div style="text-align: right; margin-top: 15px;">
-                <h3 id="txtTotal">Total Geral: R$ 0.00</h3>
-                <h4 id="txtTempoTotal" style="color: var(--accent-red);">Tempo Total Estimado: 0h</h4>
+            <div class="total-container">
+                <h3 id="txtTotal">Total Geral: R$ 0,00</h3>
+                <h4 id="txtTempoTotal">Tempo Total Estimado: 0 horas</h4>
             </div>
 
-            <button type="button" onclick="finalizarAgendamento()" style="margin-top: 15px; background-color: var(--accent-red);">
-                💾 Salvar e Confirmar Agendamento
+            <button type="button" onclick="finalizarAgendamento()" class="btn-primary" style="width: 100%; margin-top: 20px; padding: 16px;">
+                <i class="fas fa-save"></i> SALVAR E CONFIRMAR AGENDAMENTO
             </button>
         </div>
+
+        <!-- Informações Adicionais -->
+        <div class="card">
+            <h3>ℹ️ Informações Importantes</h3>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> Todos os agendamentos são registrados no banco de dados SQLite</li>
+                <li><i class="fas fa-check-circle"></i> Prazos processuais podem ser acompanhados na consulta</li>
+                <li><i class="fas fa-check-circle"></i> Recomenda-se preencher o responsável pela audiência</li>
+                <li><i class="fas fa-check-circle"></i> Documentos relacionados podem ser anexados posteriormente</li>
+            </ul>
+        </div>
     </div>
+
+    <footer class="rodape">
+        <div class="container-rodape">
+            <p>&copy; 2026 SisDefesa - Advocacia Criminal</p>
+            <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
+        </div>
+    </footer>
 
     <script>
         let listaServicosDb = [];
@@ -96,12 +131,135 @@
         let totalGeral = 0;
         let tempoTotalGeral = 0;
 
-        // Carrega os dados iniciais do banco ao abrir a página
+        // Carrega dados ao abrir a página
         window.onload = function() {
-            // Buscar clientes para o Select
+            // Carregar Clientes
             fetch('/listar-clientes')
                 .then(res => res.json())
                 .then(clientes => {
                     const sel = document.getElementById('selCliente');
                     clientes.forEach(c => {
-                        sel.innerHTML += `<option value="${c.id}">${c.nome} (${c.cpf})
+                        sel.innerHTML += `<option value="${c.id}">${c.nome} (${c.cpf})</option>`;
+                    });
+                })
+                .catch(err => console.error("Erro ao carregar clientes:", err));
+
+            // Carregar Serviços
+            fetch('/listar-servicos')
+                .then(res => res.json())
+                .then(servicos => {
+                    listaServicosDb = servicos;
+                    const sel = document.getElementById('selServico');
+                    servicos.forEach(s => {
+                        sel.innerHTML += `<option value="${s.id}">${s.descricao}</option>`;
+                    });
+                })
+                .catch(err => console.error("Erro ao carregar serviços:", err));
+        };
+
+        function atualizarDadosServico() {
+            const idServico = document.getElementById('selServico').value;
+            if (!idServico) return;
+
+            const servico = listaServicosDb.find(s => s.id == idServico);
+            if (servico) {
+                document.getElementById('txtPreco').value = servico.preco;
+                document.getElementById('txtTempo').value = servico.tempo_estimado;
+            }
+        }
+
+        function adicionarServicoNaLista() {
+            const idServico = document.getElementById('selServico').value;
+            const preco = parseFloat(document.getElementById('txtPreco').value);
+            const tempo = parseFloat(document.getElementById('txtTempo').value);
+
+            if (!idServico) {
+                alert("Selecione um serviço antes de adicionar.");
+                return;
+            }
+
+            const servico = listaServicosDb.find(s => s.id == idServico);
+            
+            carrinhoServicos.push({
+                id: servico.id,
+                descricao: servico.descricao,
+                preco: preco,
+                tempo: tempo
+            });
+
+            totalGeral += preco;
+            tempoTotalGeral += tempo;
+
+            atualizarTabelaCarrinho();
+        }
+
+        function atualizarTabelaCarrinho() {
+            const tbody = document.getElementById('lista-servicos-agendados');
+            tbody.innerHTML = '';
+
+            carrinhoServicos.forEach((item, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.descricao}</td>
+                        <td>${item.tempo} h</td>
+                        <td>R$ ${item.preco.toFixed(2)}</td>
+                        <td><button onclick="removerServico(${index})" style="background:#c00;color:white;">Remover</button></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('txtTotal').textContent = `Total Geral: R$ ${totalGeral.toFixed(2)}`;
+            document.getElementById('txtTempoTotal').textContent = `Tempo Total Estimado: ${tempoTotalGeral} horas`;
+        }
+
+        function removerServico(index) {
+            const item = carrinhoServicos[index];
+            totalGeral -= item.preco;
+            tempoTotalGeral -= item.tempo;
+            carrinhoServicos.splice(index, 1);
+            atualizarTabelaCarrinho();
+        }
+
+        function finalizarAgendamento() {
+            const clienteId = document.getElementById('selCliente').value;
+            const data = document.getElementById('data_agendamento').value;
+            const responsavel = document.getElementById('responsavel').value;
+
+            if (!clienteId || !data || !responsavel || carrinhoServicos.length === 0) {
+                alert("Preencha todos os campos e adicione pelo menos um serviço.");
+                return;
+            }
+
+            const agendamento = {
+                cliente_id: clienteId,
+                data: data,
+                responsavel: responsavel,
+                total: totalGeral,
+                tempo_total: tempoTotalGeral,
+                servicos: carrinhoServicos
+            };
+
+            fetch('/finalizar-agendamento', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(agendamento)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("✅ Agendamento salvo com sucesso!");
+                    // Limpar formulário
+                    carrinhoServicos = [];
+                    totalGeral = 0;
+                    tempoTotalGeral = 0;
+                    atualizarTabelaCarrinho();
+                    document.getElementById('selCliente').value = '';
+                    document.getElementById('data_agendamento').value = '';
+                    document.getElementById('responsavel').value = '';
+                }
+            })
+            .catch(err => alert("Erro ao salvar agendamento."));
+        }
+    </script>
+</body>
+</html>
