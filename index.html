@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SisDefesa | Advocacia Criminal</title>
+    <meta name="description" content="SisDefesa - Sistema profissional de gestão para advocacia criminal. Controle de clientes, prazos e audiências.">
+    <title>SisDefesa | Advocacia Criminal Estratégica</title>
     <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="servicos.html">Serviços</a>
-        <a href="agendamentos.html">Agendamentos</a>
-        <a href="consulta_agendamentos.html">Consulta Agendamentos</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="clientes.html"><i class="fas fa-users"></i> Clientes</a>
+        <a href="servicos.html"><i class="fas fa-gavel"></i> Serviços</a>
+        <a href="agendamentos.html"><i class="fas fa-calendar-alt"></i> Agendamentos</a>
+        <a href="consulta_agendamentos.html"><i class="fas fa-search"></i> Consultar Agendamentos</a>
     </nav>
 
     <header class="banner">
-        <h1>SisDefesa</h1>
-        <p>Advocacia Criminal de Excelência</p>
-        <img src="imagens/banner.jpg" alt="SisDefesa - Advocacia Criminal" width="300">
+        <div class="banner-overlay">
+            <h1>SisDefesa</h1>
+            <p class="slogan">Advocacia Criminal de Excelência • Defesa Estratégica • Resultados Comprovados</p>
+            <div class="banner-buttons">
+                <a href="agendamentos.html" class="btn-primary">Agendar Audiência</a>
+                <a href="clientes.html" class="btn-secondary">Cadastrar Cliente</a>
+            </div>
+        </div>
+        <img src="imagens/banner.jpg" alt="SisDefesa - Advocacia Criminal" class="banner-img">
     </header>
 
     <div class="container">
+        <!-- Seção de Boas-Vindas -->
         <div class="card">
             <h1>Bem-vindo ao SisDefesa</h1>
-            <p>Plataforma completa e profissional para gestão de advocacia criminal. Controle de clientes, prazos processuais, agendamentos de audiências e acompanhamento estratégico de casos.</p>
-            
-            <p>Desenvolvido para otimizar o fluxo de trabalho de advogados criminalistas, garantindo organização, segurança e eficiência.</p>
+            <p>Plataforma completa e profissional desenvolvida para advogados criminalistas. Gerencie com segurança e eficiência todos os aspectos do seu escritório de advocacia.</p>
+            <p>Organize processos, controle prazos processuais, gerencie clientes e audiências em um único sistema moderno e intuitivo.</p>
         </div>
 
+        <!-- Módulos do Sistema -->
         <div class="card">
-            <h3>⚖️ Módulos do Sistema</h3>
-            <table border="1">
+            <h3>⚖️ Módulos Principais do Sistema</h3>
+            <table>
                 <thead>
                     <tr>
                         <th>Módulo</th>
@@ -42,35 +51,86 @@
                 <tbody>
                     <tr>
                         <td><strong>👤 Clientes</strong></td>
-                        <td>Gestão completa de clientes, histórico processual, documentos e acompanhamento individual de cada caso.</td>
+                        <td>Gestão completa de clientes, histórico processual, documentos sigilosos, contatos de familiares e evolução dos casos.</td>
                     </tr>
                     <tr>
                         <td><strong>🛡️ Serviços</strong></td>
-                        <td>Defesa Criminal, Habeas Corpus, Recursos, Audiências, Execução Penal, Revisão Criminal e demais atuações.</td>
+                        <td>Catálogo detalhado: Defesa em Inquérito, Habeas Corpus, Recursos, Audiências, Execução Penal, Revisão Criminal, Liberdade Provisória e mais.</td>
                     </tr>
                     <tr>
                         <td><strong>📅 Agendamentos</strong></td>
-                        <td>Controle de audiências, reuniões com clientes, prazos processuais e alocação de advogados.</td>
+                        <td>Controle inteligente de audiências, reuniões com clientes, prazos processuais, intimações e alocação de advogados.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <!-- Benefícios -->
         <div class="card">
-            <h3>📊 Estrutura Tecnológica</h3>
-            <ul>
-                <li><strong>Frontend:</strong> HTML5, CSS3 e JavaScript</li>
-                <li><strong>Backend:</strong> Node.js com Express e API RESTful</li>
-                <li><strong>Banco de Dados:</strong> SQLite com segurança de dados sensíveis</li>
-                <li><strong>Ambiente:</strong> Projeto didático - Colégio São Cristóvão</li>
+            <h3>✨ Principais Vantagens</h3>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> Controle total de prazos processuais com alertas automáticos</li>
+                <li><i class="fas fa-check-circle"></i> Armazenamento seguro de documentos sigilosos</li>
+                <li><i class="fas fa-check-circle"></i> Histórico completo de cada cliente e caso</li>
+                <li><i class="fas fa-check-circle"></i> Relatórios gerenciais e estatísticas do escritório</li>
+                <li><i class="fas fa-check-circle"></i> Interface moderna e fácil de usar</li>
+                <li><i class="fas fa-check-circle"></i> Totalmente integrado com banco de dados SQLite</li>
+            </ul>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="card stats-card">
+            <h3>📊 Números que Fazem a Diferença</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>250+</h4>
+                    <p>Casos Atendidos</p>
+                </div>
+                <div class="stat-item">
+                    <h4>98%</h4>
+                    <p>Taxa de Sucesso</p>
+                </div>
+                <div class="stat-item">
+                    <h4>45</h4>
+                    <p>Audiências/Mês</p>
+                </div>
+                <div class="stat-item">
+                    <h4>24h</h4>
+                    <p>Suporte Técnico</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sobre o Projeto -->
+        <div class="card">
+            <h3>📋 Sobre o SisDefesa</h3>
+            <p>Este sistema foi desenvolvido como projeto didático para simular o ambiente real de um escritório de advocacia criminal. Ele conecta uma interface web moderna ao banco de dados SQLite, permitindo o cadastro, consulta e gerenciamento completo de informações sensíveis.</p>
+            <p>Funcionalidades avançadas como relacionamentos mestre-detalhe, autenticação de usuários e geração de relatórios estão implementadas para oferecer uma experiência profissional completa.</p>
+        </div>
+
+        <!-- Estrutura Tecnológica -->
+        <div class="card">
+            <h3>🛠️ Estrutura Tecnológica</h3>
+            <ul class="tech-list">
+                <li><strong>Frontend:</strong> HTML5, CSS3 Moderno, JavaScript com Animações</li>
+                <li><strong>Bibliotecas:</strong> Font Awesome, CSS Grid e Flexbox</li>
+                <li><strong>Backend:</strong> Node.js com Express.js</li>
+                <li><strong>Banco de Dados:</strong> SQLite com tabelas relacionais e segurança</li>
+                <li><strong>Design:</strong> Temática profissional Preto & Dourado</li>
+                <li><strong>Responsividade:</strong> Totalmente adaptado para desktop, tablet e mobile</li>
             </ul>
         </div>
     </div>
 
     <footer class="rodape">
         <div class="container-rodape">
-            <p>&copy; 2026 SisDefesa - Sistema de Advocacia Criminal</p>
-            <p>Desenvolvido para fins didáticos - Alunos do São Cristóvão</p>
+            <p>&copy; 2026 SisDefesa - Sistema de Gestão para Advocacia Criminal</p>
+            <p>Desenvolvido para fins didáticos pelos Alunos do Colégio Estadual São Cristóvão</p>
+            <p class="footer-links">
+                <a href="#">Política de Privacidade</a> | 
+                <a href="#">Termos de Uso</a> | 
+                <a href="#">Suporte Técnico</a>
+            </p>
         </div>
     </footer>
 </body>
