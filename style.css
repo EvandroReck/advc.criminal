@@ -1,248 +1,243 @@
 /* ==========================================================================
-   PALETA DE CORES OFICIAL - COLÉGIO ESTADUAL SÃO CRISTÓVÃO
+   PALETA DE CORES - ADVOCACIA CRIMINAL (PRETO E DOURADO)
    ========================================================================== */
 :root {
-    --primary-blue: #132960;   /* Azul escuro do escudo e estruturas */
-    --accent-red: #D31C24;     /* Vermelho vivo dos detalhes e textos */
-    --bg-white: #FFFFFF;       /* Branco puro para blocos e destaques */
-    --bg-light: #F0F3F8;       /* Cinza azulado bem claro para o fundo do site */
-    --text-dark: #1C1C1C;      /* Cinza quase preto para melhor leitura */
-    --text-muted: #555555;     /* Cinza médio para textos secundários */
+    --primary-black: #0F172A;
+    --gold: #D4AF37;
+    --gold-dark: #B8972E;
+    --dark-gray: #1E2937;
+    --text-light: #F1F5F9;
+    --text-muted: #CBD5E1;
+    --accent: #EAB308;
 }
 
 /* ==========================================================================
-   ESTRUTURA GERAL DA PÁGINA
+   ESTRUTURA GERAL
    ========================================================================== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
+    background-color: #0A0F1C;
+    color: var(--text-light);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    line-height: 1.6;
 }
 
-/* O container principal estica para empurrar o rodapé para baixo */
 .container {
-    padding: 2rem 1rem;
-    max-width: 900px;
+    padding: 2.5rem 1.5rem;
+    max-width: 1200px;
     margin: 0 auto;
     flex: 1;
 }
 
 /* ==========================================================================
-   MENU DE NAVEGAÇÃO (NAV) - Estilo Azul Escuro com Hover Vermelho
+   NAVEGAÇÃO
    ========================================================================== */
 nav {
-    background-color: var(--primary-blue);
-    padding: 1.1rem;
+    background-color: var(--primary-black);
+    padding: 1.3rem 5%;
     display: flex;
     justify-content: space-around;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    border-bottom: 4px solid var(--accent-red); /* Faixa vermelha de destaque */
+    align-items: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    border-bottom: 5px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav a {
-    color: var(--bg-white);
+    color: var(--text-light);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.05rem;
-    padding: 5px 12px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: all 0.4s ease;
 }
 
 nav a:hover {
-    background-color: var(--accent-red);
-    color: var(--bg-white);
+    background-color: var(--gold);
+    color: var(--primary-black);
+    transform: translateY(-3px);
 }
 
 /* ==========================================================================
-   HEADER / BANNER PRINCIPAL (Inspirado fielmente no design da placa)
+   BANNER
    ========================================================================== */
 .banner {
-    /* Base branca com as curvas geométricas vermelha e azul nas extremidades */
-    background: 
-        linear-gradient(115deg, var(--primary-blue) 12%, transparent 12.5%),
-        linear-gradient(295deg, var(--accent-red) 12%, transparent 12.5%),
-        linear-gradient(115deg, var(--accent-red) 14%, transparent 14.5%),
-        linear-gradient(295deg, var(--primary-blue) 14%, transparent 14.5%),
-        var(--bg-white);
-    
-    color: var(--primary-blue);
-    padding: 40px 20px;
+    background: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.88)), 
+                url('imagens/banner.jpg') center/cover no-repeat;
+    color: white;
+    padding: 140px 20px 100px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-    margin-bottom: 15px;
-    border-bottom: 1px solid #DDD;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-overlay {
+    max-width: 900px;
+    margin: 0 auto;
+    z-index: 2;
 }
 
 .banner h1 {
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 800;
+    font-size: 4rem;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--primary-blue);
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin: 0 0 20px 0;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.8);
 }
 
-.banner p {
-    margin: 8px 0;
-    font-size: 1.2rem;
+.slogan {
+    font-size: 1.5rem;
+    margin-bottom: 35px;
+    color: var(--text-light);
+}
+
+.banner-buttons {
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 14px 32px;
+    margin: 0 10px;
+    border-radius: 50px;
     font-weight: bold;
-    color: var(--accent-red); /* O subtítulo imita a linha vermelha inferior da placa */
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.4s;
 }
 
-.banner img {
-    margin-top: 15px;
-    max-width: 100%;
-    height: auto;
-    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+.btn-primary {
+    background: var(--gold);
+    color: var(--primary-black);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid var(--gold);
+}
+
+.btn-primary:hover {
+    background: #f0c14d;
+    transform: scale(1.05);
+}
+
+.banner-img {
+    max-width: 320px;
+    margin: 30px auto 0;
+    border: 5px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
 }
 
 /* ==========================================================================
-   CARDS DE CONTEÚDO
+   CARDS E CONTEÚDO
    ========================================================================== */
 .card {
-    background: var(--bg-white);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid var(--primary-blue); /* Detalhe azul na lateral esquerda */
-    margin-bottom: 25px;
+    background: var(--dark-gray);
+    padding: 2.5rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-left: 7px solid var(--gold);
+    margin-bottom: 35px;
+    transition: all 0.5s ease;
 }
 
-.card h1, .card h2, .card h3 {
-    color: var(--primary-blue);
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
+}
+
+.card h1, .card h3 {
+    color: var(--gold);
     margin-top: 0;
 }
 
-.card p {
-    line-height: 1.6;
-    color: var(--text-dark);
+/* Lista de Benefícios */
+.benefits-list {
+    list-style: none;
+    padding: 0;
 }
 
-hr {
-    border: 0;
-    height: 1px;
-    background: #E0E0E0;
-    margin: 1.5rem 0;
+.benefits-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #334155;
+    font-size: 1.1rem;
 }
 
-/* ==========================================================================
-   FORMULÁRIOS E INPUTS
-   ========================================================================== */
-input, select, button {
-    width: 100%;
-    padding: 0.85rem;
-    margin: 0.6rem 0;
-    border: 2px solid #CBD5E1;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+/* Estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    margin-top: 25px;
 }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    box-shadow: 0 0 0 3px rgba(19, 41, 96, 0.15);
+.stat-item {
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--gold);
 }
 
-/* Botão Principal em Vermelho Destaque (Estilo Escolar) */
-button, button[type="submit"] {
-    background-color: var(--accent-red);
-    color: var(--bg-white);
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 3px 6px rgba(211, 28, 36, 0.2);
-}
-
-button:hover {
-    background-color: #A81319; /* Vermelho um pouco mais escuro para o hover */
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(211, 28, 36, 0.3);
+.stat-item h4 {
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin: 0;
 }
 
 /* ==========================================================================
-   TABELAS DE DADOS
+   TABELAS
    ========================================================================== */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1.2rem;
-    background-color: var(--bg-white);
+    margin-top: 20px;
+    background: rgba(30, 41, 55, 0.7);
 }
 
 th, td {
-    padding: 12px 15px;
+    padding: 16px;
     text-align: left;
 }
 
 thead tr {
-    background-color: var(--primary-blue);
-    color: var(--bg-white);
-}
-
-th {
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-}
-
-tbody tr {
-    border-bottom: 1px solid #E2E8F0;
-    transition: background-color 0.2s ease;
-}
-
-/* Efeito zebra suave nas linhas da tabela */
-tbody tr:nth-of-type(even) {
-    background-color: #F8FAFC;
+    background: var(--primary-black);
+    color: var(--gold);
 }
 
 tbody tr:hover {
-    background-color: #EDF2F7;
-}
-
-/* Botão de ação menor dentro das tabelas */
-td button {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    width: auto;
-    margin: 0;
-    background-color: var(--primary-blue);
-}
-
-td button:hover {
-    background-color: #0A1738;
+    background-color: rgba(212, 175, 55, 0.12);
 }
 
 /* ==========================================================================
-   RODAPÉ (FOOTER) - Estilo Dark Técnico
+   RODAPÉ
    ========================================================================== */
 .rodape {
-    background-color: #1A1A1A; /* Fundo cinza escuro grafite */
-    color: #AEB0B5;
+    background: var(--primary-black);
+    color: var(--text-muted);
     text-align: center;
-    padding: 25px 0;
-    margin-top: 40px;
-    width: 100%;
-    border-top: 4px solid var(--primary-blue); /* Linha azul de fechamento */
+    padding: 50px 20px 30px;
+    margin-top: auto;
+    border-top: 6px solid var(--gold);
 }
 
-.container-rodape p {
-    margin: 6px 0;
-    font-size: 0.9rem;
+.footer-links a {
+    color: var(--gold);
+    margin: 0 10px;
+    text-decoration: none;
 }
 
-.container-rodape p:first-child {
-    color: var(--bg-white);
-    font-weight: bold;
+/* Responsividade */
+@media (max-width: 768px) {
+    .banner h1 { font-size: 2.8rem; }
+    nav { flex-direction: column; gap: 10px; }
 }
