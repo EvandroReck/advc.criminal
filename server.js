@@ -1,172 +1,106 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-const app = express();
+// Script.js - SisDefesa Advocacia Criminal
 
-// Configurações do Servidor
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json()); // Necessário para processar o JSON estruturado dos agendamentos
-app.use(express.static('.')); // Serve as páginas HTML, CSS e imagens do projeto
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('%c🚀 SisDefesa - Advocacia Criminal carregado com sucesso!', 
+        'color: #D4AF37; font-size: 18px; font-weight: bold;');
 
-// Conexão com o Novo Banco de Dados do Projeto
-const db = new sqlite3.Database('./siscristovao.db');
-
-// Inicialização das Tabelas (Cria a estrutura caso não exista)
-db.serialize(() => {
-    // 1. Tabela de Clientes (Solicitantes dos Serviços)
-    db.run(`CREATE TABLE IF NOT EXISTS clientes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        nome TEXT NOT NULL, 
-        cpf TEXT NOT NULL, 
-        telefone TEXT NOT NULL
-    )`);
-
-    // 2. Tabela de Serviços (Catálogo de Assistência do Laboratório)
-    db.run(`CREATE TABLE IF NOT EXISTS servicos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        descricao TEXT NOT NULL, 
-        preco REAL NOT NULL, 
-        tempo_estimado INTEGER NOT NULL
-    )`);
-
-    // 3. Tabela Mestre: Agendamentos (Guarda a Ordem de Serviço geral)
-    db.run(`CREATE TABLE IF NOT EXISTS agendamentos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        cliente_id INTEGER NOT NULL, 
-        data TEXT NOT NULL, 
-        responsavel TEXT NOT NULL,
-        total REAL NOT NULL,
-        tempo_total INTEGER NOT NULL,
-        FOREIGN KEY (cliente_id) REFERENCES clientes (id)
-    )`);
-
-    // 4. Tabela Detalhe: Itens do Agendamento (Relaciona os serviços aplicados a cada O.S.)
-    db.run(`CREATE TABLE IF NOT EXISTS itens_agendamento (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        agendamento_id INTEGER NOT NULL, 
-        servico_id INTEGER NOT NULL, 
-        preco_cobrado REAL NOT NULL,
-        FOREIGN KEY (agendamento_id) REFERENCES agendamentos (id),
-        FOREIGN KEY (servico_id) REFERENCES servicos (id)
-    )`);
-});
-
-/* ==========================================================================
-   ROTAS DO MÓDULO: CLIENTES
-   ========================================================================== */
-
-// Salvar um novo cliente
-app.post('/salvar-cliente', (req, res) => {
-    const { nome, cpf, telefone } = req.body;
-    const sql = `INSERT INTO clientes (nome, cpf, telefone) VALUES (?, ?, ?)`;
-    
-    db.run(sql, [nome, cpf, telefone], (err) => {
-        if (err) return res.status(500).send("Erro ao salvar cliente: " + err.message);
-        // Redireciona de volta para a página de listagem/cadastro
-        res.redirect('/clientes.html');
-    });
-});
-
-// Listar todos os clientes (API JSON)
-app.get('/listar-clientes', (req, res) => {
-    const sql = `SELECT * FROM clientes ORDER BY nome ASC`;
-    db.all(sql, [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
-});
-
-/* ==========================================================================
-   ROTAS DO MÓDULO: SERVIÇOS
-   ========================================================================== */
-
-// Salvar um novo serviço no catálogo
-app.post('/salvar-servico', (req, res) => {
-    const { descricao, preco, tempo_estimado } = req.body;
-    const sql = `INSERT INTO servicos (descricao, preco, tempo_estimado) VALUES (?, ?, ?)`;
-    
-    db.run(sql, [descricao, parseFloat(preco), parseInt(tempo_estimado)], (err) => {
-        if (err) return res.status(500).send("Erro ao salvar serviço: " + err.message);
-        res.redirect('/servicos.html');
-    });
-});
-
-// Listar todos os serviços (API JSON)
-app.get('/listar-servicos', (req, res) => {
-    const sql = `SELECT * FROM servicos ORDER BY descricao ASC`;
-    db.all(sql, [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
-});
-
-/* ==========================================================================
-   ROTAS DO MÓDULO: AGENDAMENTOS (TRANSAÇÃO MESTRE-DETALHE)
-   ========================================================================== */
-
-// Gravar Agendamento Completo (Mestre e Detalhes encapsulados)
-app.post('/finalizar-agendamento', (req, res) => {
-    const { cliente_id, data, responsavel, total, tempo_total, servicos } = req.body;
-
-    // 1. Insere o registro na tabela Mestre (agendamentos)
-    const sqlMestre = `INSERT INTO agendamentos (cliente_id, data, responsavel, total, tempo_total) VALUES (?, ?, ?, ?, ?)`;
-    
-    db.run(sqlMestre, [cliente_id, data, responsavel, total, tempo_total], function(err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-
-        // Recupera o ID gerado automaticamente para este agendamento
-        const agendamentoId = this.lastID;
-
-        // 2. Prepara a inserção dos múltiplos serviços vinculados a este agendamento (Detalhe)
-        const sqlDetalhe = `INSERT INTO itens_agendamento (agendamento_id, servico_id, preco_cobrado) VALUES (?, ?, ?)`;
-        const stmt = db.prepare(sqlDetalhe);
-
-        // Percorre o array de serviços que veio do front-end e executa o statement
-        servicos.forEach(item => {
-            stmt.run(agendamentoId, item.id, item.preco);
+    // Animação dos Cards com Intersection Observer
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 150);
+            }
         });
+    }, { threshold: 0.15 });
 
-        // Finaliza o statement para liberar o banco de dados
-        stmt.finalize((errFinalize) => {
-            if (errFinalize) return res.status(500).json({ success: false, error: errFinalize.message });
-            res.json({ success: true });
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px)';
+        card.style.transition = 'all 0.7s ease';
+        observer.observe(card);
+    });
+
+    // Efeito parallax suave no banner
+    const banner = document.querySelector('.banner');
+    if (banner) {
+        banner.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 8;
+            const y = (e.clientY / window.innerHeight) * 8;
+            banner.style.backgroundPosition = `calc(50% + ${x}px) calc(50% + ${y}px)`;
+        });
+    }
+
+    // Botões com efeito ripple
+    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            this.appendChild(ripple);
+
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+
+            setTimeout(() => ripple.remove(), 600);
         });
     });
-});
 
-// Listar todos os Agendamentos salvos (Mestre) com INNER JOIN para pegar o nome do cliente
-app.get('/listar-agendamentos', (req, res) => {
-    const sql = `
-        SELECT a.id, a.data, a.responsavel, a.total, a.tempo_total, c.nome as nome_cliente 
-        FROM agendamentos a 
-        INNER JOIN clientes c ON a.cliente_id = c.id 
-        ORDER BY a.id DESC`;
-        
-    db.all(sql, [], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
+    // Contador animado para estatísticas
+    function animateCounter(el, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+                el.textContent = target + (target === 98 ? '%' : '+');
+                clearInterval(timer);
+            } else {
+                el.textContent = Math.floor(start) + (target === 98 ? '%' : '+');
+            }
+        }, 16);
+    }
+
+    // Ativar contadores quando visíveis
+    const statNumbers = document.querySelectorAll('.stat-item h4');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const number = parseInt(entry.target.textContent);
+                if (!isNaN(number)) {
+                    entry.target.textContent = '0';
+                    animateCounter(entry.target, number);
+                }
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    });
+
+    statNumbers.forEach(stat => statsObserver.observe(stat));
+
+    // Tecla de atalho (Exemplo: Pressione "C" para ir para Clientes)
+    document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'c') {
+            window.location.href = 'clientes.html';
+        }
     });
 });
 
-// Listar serviços específicos de um agendamento (Detalhe)
-app.get('/detalhes-agendamento/:id', (req, res) => {
-    const { id } = req.params;
-    const sql = `
-        SELECT i.preco_cobrado, s.descricao, s.tempo_estimado 
-        FROM itens_agendamento i 
-        INNER JOIN servicos s ON i.servico_id = s.id 
-        WHERE i.agendamento_id = ?`;
-        
-    db.all(sql, [id], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
-});
-
-// Inicialização do Servidor na Porta 3000
-app.listen(3000, () => {
-    console.log('====================================================');
-    console.log('🚀 SisCristóvão Rodando com Sucesso na Porta 3000!');
-    console.log('📂 Banco de Dados: siscristovao.db');
-    console.log('====================================================');
-});
+// Função extra para futuro uso em outras páginas
+function showNotification(message, type = 'success') {
+    const notif = document.createElement('div');
+    notif.className = `notification ${type}`;
+    notif.textContent = message;
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+        notif.style.opacity = '0';
+        setTimeout(() => notif.remove(), 500);
+    }, 3000);
+}
